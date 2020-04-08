@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
 # This call to setup() does all the work
 setup(
     name="mitrecve",
-    version="1.1.0",
+    version="1.0.0",
     description="Get all cve corresponding to a specific keyword; A package or a product for example.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -24,7 +24,7 @@ setup(
     ],
     packages=["mitrecve"],
     include_package_data=True,   
-    install_requires=["requests"],
+    install_requires=["requests", "docopt", "beautifulsoup4"],
     entry_points={
         "console_scripts": [
             "mitrecve=mitrecve.__main__:main",

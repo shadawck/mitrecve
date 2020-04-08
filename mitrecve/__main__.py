@@ -25,7 +25,7 @@ def main():
     """
     Implement CLI logic 
     """
-    arguments = docopt(__doc__, version='mitrecve 1.0.1')
+    arguments = docopt(__doc__, version='mitrecve 1.0.0')
     
     ############## CLI VAR ################
     __verbose    = arguments["--verbose"]
