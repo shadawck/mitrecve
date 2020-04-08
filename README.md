@@ -1,7 +1,6 @@
 # MITRECVE  
 
-Get all cve corresponding to a specific keyword or a list of keywords - Packages or products for example - from the [mitre](https://cve.mitre.org/) website
-Display or save these informations.
+Get all CVE corresponding to a specific keyword or list of keywords - Packages or products for example - from the [mitre](https://cve.mitre.org/) website.
 
 # Install
 
@@ -35,7 +34,7 @@ mitrecve --help
 >      --version      Show version.
 ```
 
-Example of ouput for the python html5lib module: 
+Example of output for the python ```html5lib``` module:
 
 ```bash
 mitrecve html5lib
@@ -55,7 +54,7 @@ CVE DETAIL https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-9909
 DESCRIPTION The serializer in html5lib before 0.99999999 might allow remote attackers to conduct cross-site scripting (XSS) attacks by leveraging mishandling of the < (less than) character in attribute values.
 ```
 
-you can also search for multiple keyword and print (or save with ```-o,--output``` flag) additional detail with  ```--detail``` flag: 
+You can also search for multiple keywords and print (or save with ```-o,--output``` flag) additional details with  ```--detail``` flag: 
 ```bash
 mitrecve recon-ng,harvester --detail
 ```
@@ -86,7 +85,7 @@ NVD LINK : http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2011-5197
 ```
 
 # API
-Just import and use it. 
+Just import and use it.
 
 ```python
 >>> from mitrecve import crawler
@@ -108,7 +107,7 @@ Just import and use it.
 [('CVE-2016-4000', # cve name
   'Jython before 2.7.1rc1 allows attackers to execute arbitrary code via a '
   'crafted serialized PyFunction object.', # cve description
-  'http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-4000',
+  'http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-4000', # nist detail
   ['http://advisories.mageia.org/MGASA-2015-0096.html',
    'http://www.oracle.com/technetwork/security-advisory/cpujul2017-3236622.html',
    'http://www.mandriva.com/security/advisories?name=MDVSA-2015:158',
