@@ -47,4 +47,8 @@ def main():
     sys.stdout.close()
 
 if __name__ == "__main__":
-    main()
+    #main()
+    #crawler.MITRE_get_cve_detail("apache+jre")
+    #url = "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4002"
+    #crawler.download(url)
+    crawler.MITRE_get_cve_detail_opti("html5lib")
