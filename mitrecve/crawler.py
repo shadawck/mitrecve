@@ -4,6 +4,7 @@ Get the vulnerabilities from different source (See docs/vuln-source.md) for each
 import json
 import requests
 from bs4 import BeautifulSoup
+MAX_WORKER = 15
 
 ############################
 ##### CVE MITRE Source #####
@@ -14,37 +15,54 @@ from bs4 import BeautifulSoup
 # It's more pratical to make little requests
 # So let's go make a litle API with beautifulsoup and requests
 
+# Add souptrainer and lxml
+
+import lxml.html as lh
+from pprint import pprint
 
 def MITRE_get_main_page(package): 
     """
     Get all the CVE for a package/keyword
     """
-    base_url = "https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=" + package
-    rq = requests.get(base_url).text
-
-    # data struct : 
-    # [(cve_name1, cve_link1, cve_desc1),...,(cve_name_n, cve_link_n, cve_desc_n)]
+    base_url = "https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=" + package # package can be a keyword or a CVE ID or a list of Keyword/CVE ID (separate with a +) 
     cve_group = []
-    soup = BeautifulSoup(rq, 'html.parser')
+    
 
+    document = lh.fromstring(requests.get(base_url).text)
 
-    # Get each line (cve_name/link, cve_description) from request rq in html format
-    soup = soup.select("#TableWithRules")[0].find_all("tr") 
+    cve_entries = document.cssselect("div#TableWithRules table tr > td") # List of <tr> entries for CVE in main page
 
-    souptd = []
-    for el in soup : 
-        souptd.append(el.find_all("td"))
-
-    for td in souptd[1:] : 
-
+    for i in range(0, len(cve_entries) , 2):
         cve_group.append(
             (
-                td[0].string.strip(), 
-                 "https://cve.mitre.org" + td[0].a['href'],
-                td[1].string.strip()
+                cve_entries[i].text_content(),
+                "https://cve.mitre.org/cgi-bin/cvename.cgi?name=" + cve_entries[i].text_content(),
+                cve_entries[i+1].text_content()
             )
         )
-    return cve_group
+    return cve_group 
+
+
+# Getter
+def get_cve_links(package) :
+    cve_links = []
+    cve_group = MITRE_get_main_page(package)
+    for cve in cve_group :
+        cve_links.append(cve[1])
+    return cve_links
+
+def get_cve_id(package) :
+    cve_id = []
+    cve_group = MITRE_get_main_page(package)
+    for cve in cve_group :
+        cve_id.append(cve[0])
+
+def get_cve_desc(package) :
+    cve_desc = []
+    cve_group = MITRE_get_main_page(package)
+    for cve in cve_group :
+        cve_desc.append(cve[1])
+    return cve_desc
 
 def MITRE_get_cve_detail(package):
     cve_group = MITRE_get_main_page(package)
@@ -99,3 +117,78 @@ def MITRE_get_cve_detail(package):
         )
 
     return cve_detail 
+
+###########################
+###### CVE MITRE API ######
+###########################
+
+# get data for a CVE-ID 
+def download(url):
+    document = lh.fromstring(requests.get(url, stream=True).text)  
+    cve_ref = []     #  reference links
+    
+    cve_detail = []  #  [(cve_name, cve_desc, more_cve_1, [ref_1_cve_1, ref_2_cve_1]) ,..., (cve_name, cve_desc, more_cve_n, [ref_1_cve_n, ref_2_cve_n])]
+
+    # SELECTOR
+    ## Ref Selector
+    ref_selector = document.cssselect("div#GeneratedTable table tr td ul li a")
+
+    for c in ref_selector:
+        cve_ref.append(c.get("href"))
+    # DEBUG   pprint(cve_ref)
+
+    ## NVD Selector
+    nvd_selector = document.cssselect("div#GeneratedTable .ltgreybackground a")
+    nvd_links = nvd_selector[0].get("href")
+    # DEBUGpprint(nvd_links)
+
+    ## Assinging CNA Selector
+    cna_selector = document.cssselect("div#GeneratedTable table tr:nth-child(9)")
+    cna = cna_selector[0].text_content().strip()
+    # DEBUGpprint(cna)
+
+    ## Date entry Selector
+    date_selector = document.cssselect("div#GeneratedTable table tr:nth-child(11) td b")
+    date = date_selector[0].text_content()
+    date = date[0:4] + "/" + date[4:6] + "/" + date[6:]
+    # DEBUG pprint(date)
+
+
+    # Output a couple composed of (cve_name, cve_desc, nvdlinks, [cve_ref])
+    return (cve_ref, nvd_links, cna, date)
+
+
+def MITRE_get_cve_detail_opti(package):  
+
+    links = get_cve_links(package)
+
+
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    from time import time
+    # multithreading
+    start = time()
+    processes = []
+
+    with ThreadPoolExecutor(max_workers=MAX_WORKER) as executor:
+        for url in links:
+            processes.append(executor.submit(download, url))
+
+    for task in as_completed(processes):
+        pprint(task.result())
+
+    print(f'Time taken: {time() - start}')
+
+## OPTI STEP :
+# Get all CVE url from main page 
+# Construct url pool with multi threading 
+# Make request   
+
+
+## SAME IMPLEMENTATION
+# Search by CVE-ID
+# @require : exact CVE ID 
+
+# Search by Keyword : 
+
+# search by multiple keywords
+

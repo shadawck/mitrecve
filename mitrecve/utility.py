@@ -1,13 +1,13 @@
 from mitrecve import crawler
 
-# NEED OPTIMISATION ->    1 (ncall)    0.002    0.002    8.526 (cumtime)    8.526 (totime) /mnt/d/GIT/scabi/scabi/utility_cli.py:40(MITRE_print_vulnerabilites)
+
 def MITRE_print_vulnerabilites(listDependencies, __verbose): 
     i = 0
 
     print("\n>>>>>>>>>>>>>>> SEARCH IN MITRE DATABASE <<<<<<<<<<<<<<<")
 
     for dep in listDependencies :
-        list_vuln_by_dep = crawler.MITRE_get_main_page(dep)
+        list_vuln_by_dep = crawler.MITRE_get_main_page_opti(dep)
 
         if list_vuln_by_dep == [] : 
             if __verbose :
@@ -25,7 +25,7 @@ def MITRE_print_vulnerabilites(listDependencies, __verbose):
             for cve in list_vuln_by_dep : 
                 print("CVE :"       ,  cve[0]) # print cve_name 
                 print("CVE DETAIL"  ,  cve[1]) # print cve_link
-                print("DESCRIPTION" ,  cve[2]) # print cve_description
+                print("DESCRIPTION" ,  cve[2])
                 print("\n")
 
 def MITRE_print_vulnerabilites_detail(listDependencies,__verbose):
