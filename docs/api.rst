@@ -4,5 +4,5 @@ API Documentation
 The "Crawler" Module
 ---------------------
 
-.. automodule:: mitrecve.crawler
+.. automodule:: mitrecve
    :members:

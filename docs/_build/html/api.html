@@ -97,7 +97,7 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-mitrecve.crawler">The “Crawler” Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-mitrecve">The “Crawler” Module</a></li>
 </ul>
 </li>
 </ul>
@@ -166,120 +166,8 @@
             
   <div class="section" id="api-documentation">
 <h1>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-mitrecve.crawler">
-<span id="the-crawler-module"></span><h2>The “Crawler” Module<a class="headerlink" href="#module-mitrecve.crawler" title="Permalink to this headline">¶</a></h2>
-<p>Get the CVE from Mitre based on requested packages/keyword/CVE-ID</p>
-<dl class="py function">
-<dt id="mitrecve.crawler.get_cve_detail">
-<code class="sig-prename descclassname">mitrecve.crawler.</code><code class="sig-name descname">get_cve_detail</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">package</span></em><span class="sig-paren">)</span><a class="headerlink" href="#mitrecve.crawler.get_cve_detail" title="Permalink to this definition">¶</a></dt>
-<dd><p>Main function to get cve <strong>details</strong></p>
-<p>Get all the CVE for a package/keyword with details. These are valid string:</p>
-<ul class="simple">
-<li><p>Make multiple package request at the same time : <code class="docutils literal notranslate"><span class="pre">get_cve_detail(&quot;package1,package2&quot;)</span></code></p></li>
-<li><p>Use several keyword to narrow a research : <code class="docutils literal notranslate"><span class="pre">get_cve_detail(&quot;keyword1+keyword2&quot;</span></code></p></li>
-<li><p>And a combination of the above options : <code class="docutils literal notranslate"><span class="pre">get_cve_detail(&quot;keyword1+keyword2,package1,package2&quot;)</span></code>. Here there will be 3 differents requests.</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>package</strong> (<em>str</em>) – package, keyword you want to search for</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>List of Tuple composed of all the CVE found for the choosen package.</p>
-<p>Data Structure:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="n">cve_name</span><span class="p">,</span> <span class="n">cve_desc</span><span class="p">,</span> <span class="n">nvd_link_1</span><span class="p">,</span> <span class="p">[</span><span class="n">ref_1_cve_1</span><span class="p">,</span> <span class="n">ref_2_cve_1</span><span class="p">])</span> <span class="p">,</span><span class="o">...</span><span class="p">,</span> <span class="p">(</span><span class="n">cve_name</span><span class="p">,</span> <span class="n">cve_desc</span><span class="p">,</span> <span class="n">nvd_link_n</span><span class="p">,</span> <span class="p">[</span><span class="n">ref_1_cve_n</span><span class="p">,</span> <span class="n">ref_2_cve_n</span><span class="p">])]</span>
-</pre></div>
-</div>
-</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>List</p>
-</dd>
-</dl>
-<p>Examples:</p>
-<ul>
-<li><p>Example for a simple package request:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">crawler</span><span class="o">.</span><span class="n">get_cve_detail</span><span class="p">(</span><span class="s2">&quot;jython&quot;</span><span class="p">)</span>
-<span class="p">[</span>
-    <span class="p">(</span><span class="s1">&#39;CVE-2016-4000&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Jython before 2.7.1rc1 allows attackers to execute arbitrary code via a &#39;</span>
-        <span class="s1">&#39;crafted serialized PyFunction object.&#39;</span><span class="p">,</span> <span class="c1"># cve description</span>
-        <span class="s1">&#39;http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2016-4000&#39;</span><span class="p">,</span>
-        <span class="p">[</span><span class="s1">&#39;http://advisories.mageia.org/MGASA-2015-0096.html&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;http://www.oracle.com/technetwork/security-advisory/cpujul2017-3236622.html&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;http://www.mandriva.com/security/advisories?name=MDVSA-2015:158&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;https://bugzilla.redhat.com/show_bug.cgi?id=947949&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;http://lists.opensuse.org/opensuse-updates/2015-02/msg00055.html&#39;</span><span class="p">]</span>
-    <span class="p">),</span>
-
-    <span class="p">(</span><span class="s1">&#39;CVE-2013-2027&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Jython 2.2.1 uses the current umask to set the privileges of the class &#39;</span>
-        <span class="s1">&#39;cache files, which allows local users to bypass intended access &#39;</span>
-        <span class="s1">&#39;restrictions via unspecified vectors.&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;http://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2013-2027&#39;</span><span class="p">,</span>
-        <span class="p">[</span><span class="s1">&#39;http://advisories.mageia.org/MGASA-2015-0096.html&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;http://www.oracle.com/technetwork/security-advisory/cpujul2017-3236622.html&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;http://www.mandriva.com/security/advisories?name=MDVSA-2015:158&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;https://bugzilla.redhat.com/show_bug.cgi?id=947949&#39;</span><span class="p">,</span>
-         <span class="s1">&#39;http://lists.opensuse.org/opensuse-updates/2015-02/msg00055.html&#39;</span><span class="p">]</span>
-    <span class="p">)</span>
-<span class="p">]</span>
-</pre></div>
-</div>
-</li>
-</ul>
-</dd></dl>
-
-<dl class="py function">
-<dt id="mitrecve.crawler.get_main_page">
-<code class="sig-prename descclassname">mitrecve.crawler.</code><code class="sig-name descname">get_main_page</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">package</span></em><span class="sig-paren">)</span><a class="headerlink" href="#mitrecve.crawler.get_main_page" title="Permalink to this definition">¶</a></dt>
-<dd><p>Main function to get cve</p>
-<p>Get all the CVE for a package/keyword. These are valid string:</p>
-<ul class="simple">
-<li><p>Make multiple package request at the same time : <code class="docutils literal notranslate"><span class="pre">get_main_page(&quot;package1,package2&quot;)</span></code></p></li>
-<li><p>Use several keyword to narrow a research : <code class="docutils literal notranslate"><span class="pre">get_main_page(&quot;keyword1+keyword2&quot;</span></code></p></li>
-<li><p>And a combination of the above options : <code class="docutils literal notranslate"><span class="pre">get_main_page(&quot;keyword1+keyword2,package1,package2&quot;)</span></code>. Here there will be 3 differents requests.</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>package</strong> (<em>str</em>) – package, keyword you want to search for</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>List of Tuple composed of all the CVE found for the choosen package.</p>
-<p>Data Structure:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="n">cve_id_0</span><span class="p">,</span> <span class="n">cve_link_0</span><span class="p">,</span> <span class="n">cve_desc_0</span><span class="p">)</span> <span class="p">,</span><span class="o">...</span><span class="p">,</span> <span class="p">(</span><span class="n">cve_id_n</span><span class="p">,</span> <span class="n">cve_link_n</span><span class="p">,</span> <span class="n">cve_desc_n</span><span class="p">)]</span>
-</pre></div>
-</div>
-</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>List</p>
-</dd>
-</dl>
-<p>Examples:</p>
-<ul>
-<li><p>Example for a simple package request:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">crawler</span><span class="o">.</span><span class="n">get_main_page</span><span class="p">(</span><span class="s2">&quot;jython&quot;</span><span class="p">)</span>
-
-<span class="p">[</span>
-    <span class="p">(</span><span class="s1">&#39;CVE-2016-4000&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4000&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Jython before 2.7.1rc1 allows attackers to execute arbitrary code via a &#39;</span>
-        <span class="s1">&#39;crafted serialized PyFunction object.&#39;</span>
-    <span class="p">),</span>
-
-    <span class="p">(</span><span class="s1">&#39;CVE-2013-2027&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2027&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Jython 2.2.1 uses the current umask to set the privileges of the class &#39;</span>
-        <span class="s1">&#39;cache files, which allows local users to bypass intended access &#39;</span>
-        <span class="s1">&#39;restrictions via unspecified vectors.&#39;</span>
-    <span class="p">)</span>
-<span class="p">]</span>
-</pre></div>
-</div>
-</li>
-</ul>
-</dd></dl>
-
+<div class="section" id="module-mitrecve">
+<span id="the-crawler-module"></span><h2>The “Crawler” Module<a class="headerlink" href="#module-mitrecve" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
