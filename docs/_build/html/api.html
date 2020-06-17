@@ -170,14 +170,14 @@
 <span id="the-crawler-module"></span><h2>The “Crawler” Module<a class="headerlink" href="#module-mitrecve.crawler" title="Permalink to this headline">¶</a></h2>
 <p>Get the CVE from Mitre based on requested packages/keyword/CVE-ID</p>
 <dl class="py function">
-<dt id="mitrecve.crawler.MITRE_get_cve_detail">
-<code class="sig-prename descclassname">mitrecve.crawler.</code><code class="sig-name descname">MITRE_get_cve_detail</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">package</span></em><span class="sig-paren">)</span><a class="headerlink" href="#mitrecve.crawler.MITRE_get_cve_detail" title="Permalink to this definition">¶</a></dt>
+<dt id="mitrecve.crawler.get_cve_detail">
+<code class="sig-prename descclassname">mitrecve.crawler.</code><code class="sig-name descname">get_cve_detail</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">package</span></em><span class="sig-paren">)</span><a class="headerlink" href="#mitrecve.crawler.get_cve_detail" title="Permalink to this definition">¶</a></dt>
 <dd><p>Main function to get cve <strong>details</strong></p>
 <p>Get all the CVE for a package/keyword with details. These are valid string:</p>
 <ul class="simple">
-<li><p>Make multiple package request at the same time : <code class="docutils literal notranslate"><span class="pre">get_main_page(&quot;package1,package2&quot;)</span></code></p></li>
-<li><p>Use several keyword to narrow a research : <code class="docutils literal notranslate"><span class="pre">get_main_page(&quot;keyword1+keyword2&quot;</span></code></p></li>
-<li><p>And a combination of the above options : <code class="docutils literal notranslate"><span class="pre">get_main_page(&quot;keyword1+keyword2,package1,package2&quot;)</span></code>. Here there will be 3 differents requests.</p></li>
+<li><p>Make multiple package request at the same time : <code class="docutils literal notranslate"><span class="pre">get_cve_detail(&quot;package1,package2&quot;)</span></code></p></li>
+<li><p>Use several keyword to narrow a research : <code class="docutils literal notranslate"><span class="pre">get_cve_detail(&quot;keyword1+keyword2&quot;</span></code></p></li>
+<li><p>And a combination of the above options : <code class="docutils literal notranslate"><span class="pre">get_cve_detail(&quot;keyword1+keyword2,package1,package2&quot;)</span></code>. Here there will be 3 differents requests.</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -196,8 +196,9 @@
 </dd>
 </dl>
 <p>Examples:</p>
-<p>Example for a simple package request:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">crawler</span><span class="o">.</span><span class="n">MITRE_get_cve_detail</span><span class="p">(</span><span class="s2">&quot;jython&quot;</span><span class="p">)</span>
+<ul>
+<li><p>Example for a simple package request:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">crawler</span><span class="o">.</span><span class="n">get_cve_detail</span><span class="p">(</span><span class="s2">&quot;jython&quot;</span><span class="p">)</span>
 <span class="p">[</span>
     <span class="p">(</span><span class="s1">&#39;CVE-2016-4000&#39;</span><span class="p">,</span>
         <span class="s1">&#39;Jython before 2.7.1rc1 allows attackers to execute arbitrary code via a &#39;</span>
@@ -224,11 +225,13 @@
 <span class="p">]</span>
 </pre></div>
 </div>
+</li>
+</ul>
 </dd></dl>
 
 <dl class="py function">
-<dt id="mitrecve.crawler.MITRE_get_main_page">
-<code class="sig-prename descclassname">mitrecve.crawler.</code><code class="sig-name descname">MITRE_get_main_page</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">package</span></em><span class="sig-paren">)</span><a class="headerlink" href="#mitrecve.crawler.MITRE_get_main_page" title="Permalink to this definition">¶</a></dt>
+<dt id="mitrecve.crawler.get_main_page">
+<code class="sig-prename descclassname">mitrecve.crawler.</code><code class="sig-name descname">get_main_page</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">package</span></em><span class="sig-paren">)</span><a class="headerlink" href="#mitrecve.crawler.get_main_page" title="Permalink to this definition">¶</a></dt>
 <dd><p>Main function to get cve</p>
 <p>Get all the CVE for a package/keyword. These are valid string:</p>
 <ul class="simple">
@@ -252,9 +255,10 @@
 <dd class="field-odd"><p>List</p>
 </dd>
 </dl>
-<p>Examples:
-Example for a simple package request:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">crawler</span><span class="o">.</span><span class="n">MITRE_get_main_page</span><span class="p">(</span><span class="s2">&quot;jython&quot;</span><span class="p">)</span>
+<p>Examples:</p>
+<ul>
+<li><p>Example for a simple package request:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">crawler</span><span class="o">.</span><span class="n">get_main_page</span><span class="p">(</span><span class="s2">&quot;jython&quot;</span><span class="p">)</span>
 
 <span class="p">[</span>
     <span class="p">(</span><span class="s1">&#39;CVE-2016-4000&#39;</span><span class="p">,</span>
@@ -272,6 +276,8 @@ Example for a simple package request:</p>
 <span class="p">]</span>
 </pre></div>
 </div>
+</li>
+</ul>
 </dd></dl>
 
 </div>
