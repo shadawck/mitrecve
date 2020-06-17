@@ -1,3 +1,4 @@
+lxml
 docopt
 requests
 beautifulsoup4
