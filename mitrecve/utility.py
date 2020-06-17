@@ -7,7 +7,7 @@ def MITRE_print_vulnerabilites(listDependencies, __verbose):
     print("\n>>>>>>>>>>>>>>> SEARCH IN MITRE DATABASE <<<<<<<<<<<<<<<")
 
     for dep in listDependencies :
-        list_vuln_by_dep = crawler.MITRE_get_main_page_opti(dep)
+        list_vuln_by_dep = crawler.MITRE_get_main_page(dep)
 
         if list_vuln_by_dep == [] : 
             if __verbose :
