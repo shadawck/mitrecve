@@ -35,9 +35,7 @@ def get_main_page(package):
     Return:
         List: List of Tuple composed of all the CVE found for the choosen package. 
         
-        Data Structure::
-
-            [(cve_id_0, cve_link_0, cve_desc_0) ,..., (cve_id_n, cve_link_n, cve_desc_n)]
+        Data Structure: [(cve_id_0, cve_link_0, cve_desc_0) ,..., (cve_id_n, cve_link_n, cve_desc_n)]
 
     Examples:
     
@@ -118,9 +116,7 @@ def get_cve_detail(package):
     Return:
         List: List of Tuple composed of all the CVE found for the choosen package. 
         
-        Data Structure::
-        
-            [(cve_name, cve_desc, nvd_link_1, [ref_1_cve_1, ref_2_cve_1]) ,..., (cve_name, cve_desc, nvd_link_n, [ref_1_cve_n, ref_2_cve_n])]
+        Data Structure: [(cve_name, cve_desc, nvd_link_1, [ref_1_cve_1, ref_2_cve_1]) ,..., (cve_name, cve_desc, nvd_link_n, [ref_1_cve_n, ref_2_cve_n])]
 
     Examples:
 
