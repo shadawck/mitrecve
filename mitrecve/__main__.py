@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # __main__.py
 
-"""mitrecve
+"""MitreCVE
 
-usage:
+Basic usage:
   mitrecve <package> [--verbose --detail ] [-o FILE]
   mitrecve ( -h | --help | --version )
 
@@ -41,14 +41,10 @@ def main():
 
     ### CVE print
     if __detail:
-        utility.MITRE_print_vulnerabilites_detail(__package,__verbose)
+        utility.print_vulnerabilites_detail(__package,__verbose)
     else : 
-        utility.MITRE_print_vulnerabilites(__package,__verbose)
+        utility.print_vulnerabilites(__package,__verbose)
     sys.stdout.close()
 
 if __name__ == "__main__":
-    #main()
-    #crawler.MITRE_get_cve_detail("apache+jre")
-    #url = "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-4002"
-    #crawler.download(url)
-    crawler.MITRE_get_cve_detail_opti("html5lib")
+    main()
