@@ -9,8 +9,8 @@ with open("README.md", "r") as fh:
 # This call to setup() does all the work
 setup(
     name="mitrecve",
-    version="1.0.1",
-    description="Get all cve corresponding to a specific keyword or a list of keywords - Packages or products for example - from the mitre website Display or save these informations.",
+    version="1.0.3",
+    description="Get all CVE corresponding to a specific keyword or list of keywords from the MITRE database.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/remiflavien1/mitrecve",

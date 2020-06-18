@@ -5,8 +5,7 @@
 
 MitreCVE documentation
 ====================================
-Get all CVE corresponding to a specific keyword or list of keywords - Packages or products for example - 
-from the mitre website.
+Get all CVE corresponding to a specific keyword or list of keywords from the `MITRE <https://cve.mitre.org/>`_ database.
 
 
 .. toctree::

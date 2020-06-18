@@ -1,6 +1,9 @@
 # MITRECVE  
 
-Get all CVE corresponding to a specific keyword or list of keywords - Packages or products for example - from the [mitre](https://cve.mitre.org/) website.
+Get all CVE corresponding to a specific keyword or list of keywords from the [MITRE](https://cve.mitre.org/) database.
+
+For a complete documentation look at [ReadTheDocs](https://mitrecve.readthedocs.io/en/latest/)
+
 
 # Install
 
@@ -36,10 +39,11 @@ mitrecve --help
 
 Example of output for the python ```html5lib``` module:
 
-```bash
+```sh
 mitrecve html5lib
 ```
-```
+
+```sh
 >>>>>>>>>>>>>> SEARCH IN MITRE DATABASE <<<<<<<<<<<<<<<
 
 -------------- Package: <html5lib>  --------------
@@ -55,10 +59,11 @@ DESCRIPTION The serializer in html5lib before 0.99999999 might allow remote atta
 ```
 
 You can also search for multiple keywords and print (or save with ```-o,--output``` flag) additional details with  ```--detail``` flag: 
-```bash
+```sh
 mitrecve recon-ng,harvester --detail
 ```
-```
+
+```sh
 >>>>>>>>>>>>>>> SEARCH IN MITRE DATABASE (Detail) <<<<<<<<<<<<<<<
 
 -------------- Package: <recon-ng> --------------
