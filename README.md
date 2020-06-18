@@ -96,7 +96,7 @@ Just import and use it.
 >>> from mitrecve import crawler
 >>> from pprint import pprint
 
->>> pprint(crawler.MITRE_get_main_page("jython"))
+>>> pprint(crawler.get_main_page("jython"))
 [('CVE-2016-4000',
   'https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4000',
   'Jython before 2.7.1rc1 allows attackers to execute arbitrary code via a '
@@ -108,7 +108,7 @@ Just import and use it.
   'restrictions via unspecified vectors.')]
 
 # cve detail
->>> pprint(crawler.MITRE_get_cve_detail("jython"))
+>>> pprint(crawler.get_cve_detail("jython"))
 [('CVE-2016-4000', # cve name
   'Jython before 2.7.1rc1 allows attackers to execute arbitrary code via a '
   'crafted serialized PyFunction object.', # cve description
