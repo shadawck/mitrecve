@@ -23,7 +23,7 @@ setup(
         "Programming Language :: Python :: 3.7",
     ],
     packages=["mitrecve"],
-    include_package_data=True,   
+    include_package_ data=True,   
     install_requires=["requests", "docopt", "beautifulsoup4"],
     entry_points={
         "console_scripts": [

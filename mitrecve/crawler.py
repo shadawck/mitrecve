@@ -253,19 +253,13 @@ def get_cve_detail_opti(package):
     from concurrent.futures import ThreadPoolExecutor, as_completed
     from time import time
     # multithreading
-    start = time()
     processes = []
 
     with ThreadPoolExecutor(max_workers=MAX_WORKER) as executor:
         for url in links:
             processes.append(executor.submit(get_detail, url))
 
-    #for task in as_completed(processes):
-    #    pprint(task.result()[0])
-
     return [task.result() for task in as_completed(processes)]
-
-    print(f'Time taken: {time() - start}')
 
 ## OPTI STEP :
 # Get all CVE url from main page 
