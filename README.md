@@ -130,3 +130,12 @@ Just import and use it.
    'http://lists.opensuse.org/opensuse-updates/2015-02/msg00055.html'])]
 
 ```
+
+## Troubleshooting 
+
+### Lxml not found ( python <= 3.6 )
+
+Make sure pip resolve all the dependencies. If not working install package manually : 
+```sh 
+pip3 install lxml cssselect
+```

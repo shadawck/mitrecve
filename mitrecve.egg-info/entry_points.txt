@@ -1,0 +1,3 @@
+[console_scripts]
+mitrecve = mitrecve.__main__:main
+
