@@ -1,5 +1,8 @@
 # MITRECVE  
 
+[![PyPI version](https://badge.fury.io/py/mitrecve.svg)](https://badge.fury.io/py/mitrecve) [![Requirements Status](https://requires.io/github/remiflavien1/mitrecve/requirements.svg?branch=master)](https://requires.io/github/remiflavien1/mitrecve/requirements/?branch=master) [![Documentation Status](https://readthedocs.org/projects/mitrecve/badge/?version=latest)](https://mitrecve.readthedocs.io/en/latest/?badge=latest)
+
+
 Get all CVE corresponding to a specific keyword or list of keywords from the [MITRE](https://cve.mitre.org/) database.
 
 For a complete documentation look at [ReadTheDocs](https://mitrecve.readthedocs.io/en/latest/)
