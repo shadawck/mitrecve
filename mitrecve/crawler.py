@@ -4,7 +4,6 @@ Get the CVE from Mitre based on requested packages/keyword/CVE-ID
 import lxml.html as lh
 import json
 import requests
-from bs4 import BeautifulSoup
 import multiprocessing
 from functools import partial
 from pprint import pprint
@@ -21,7 +20,6 @@ MAX_WORKER = 15
 ###########################
 ###### CVE MITRE API ######
 ###########################
-
 
 
 def get_main_page(__format,package): 
