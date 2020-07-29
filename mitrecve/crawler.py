@@ -6,6 +6,10 @@ from pprint import pprint
 import json
 import requests
 from bs4 import BeautifulSoup
+import multiprocessing
+from pprint import pprint
+
+
 MAX_WORKER = 15
 
 # https://cve.mitre.org/cve/search_cve_list.html
@@ -20,13 +24,13 @@ MAX_WORKER = 15
 
 
 
-def get_main_page(package): 
+def get_main_page(package,__format,__verbose): 
     """Main function to get cve
 
     Get all the CVE for a package/keyword. These are valid string:
 
     * Make multiple package request at the same time : ``get_main_page("package1,package2")``
-    * Use several keyword to narrow a research : ``get_main_page("keyword1+keyword2"``
+    * Use several keyword to narrow a research : ``get_main_page("keyword1+keyword2")``
     * And a combination of the above options : ``get_main_page("keyword1+keyword2,package1,package2")``. Here there will be 3 differents requests.
 
     Args:
@@ -59,24 +63,32 @@ def get_main_page(package):
         ]
 
     """
-
+    dictMain = {}
+    id = 0 
     base_url = "https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=" + package # package can be a keyword or a CVE ID or a list of Keyword/CVE ID (separate with a +) 
     cve_group = []
-    
-
-    document = lh.fromstring(requests.get(base_url).text)
-
+    document = lh.fromstring(requests.get(base_url).text) 
     cve_entries = document.cssselect("div#TableWithRules table tr > td") # List of <tr> entries for CVE in main page
 
+
     for i in range(0, len(cve_entries) , 2):
-        cve_group.append(
-            (
-                cve_entries[i].text_content(), # CVE ID 
-                "https://cve.mitre.org/cgi-bin/cvename.cgi?name=" + cve_entries[i].text_content(), # CVE link
-                cve_entries[i+1].text_content() # CVE description
-            )
-        )
-    return cve_group 
+
+        dictMain[id] = {
+            "ID"   : cve_entries[i].text_content(),
+            "URL"  : "https://cve.mitre.org/cgi-bin/cvename.cgi?name=" + cve_entries[i].text_content(),
+            "DESC" : cve_entries[i+1].text_content().strip()
+        }
+        id +=1
+    print(dictMain[0])
+        
+    
+
+    with open('result.json', 'w') as fp:
+        json.dump(dictMain, fp)
+
+    return dictMain
+
+
 
 
 # Getter from main page
@@ -205,11 +217,6 @@ def get_cve_detail(package):
 
 ##### WORKING ON OPIMISATION
 # Not for the current version
-
-def get_main():
-    # Create a function like get_detail with lxml and coonstructed for multiprocessing (like get_cve_detail_opti )
-    pass
-
 def get_detail(url):
     # Add name, description and more like the non-optimized one
 
