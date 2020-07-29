@@ -6,6 +6,11 @@ from setuptools import setup
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
+
+
+
 # This call to setup() does all the work
 setup(
     name="mitrecve",
@@ -24,7 +29,7 @@ setup(
     ],
     packages=["mitrecve"],
     include_package_data=True,   
-    install_requires=["requests", "docopt", "beautifulsoup4"],
+    install_requires=required,
     entry_points={
         "console_scripts": [
             "mitrecve=mitrecve.__main__:main",
