@@ -2,11 +2,11 @@
 Get the CVE from Mitre based on requested packages/keyword/CVE-ID
 """
 import lxml.html as lh
-from pprint import pprint
 import json
 import requests
 from bs4 import BeautifulSoup
 import multiprocessing
+from functools import partial
 from pprint import pprint
 
 
@@ -24,7 +24,7 @@ MAX_WORKER = 15
 
 
 
-def get_main_page(package,__format,__verbose): 
+def get_main_page(__format,package): 
     """Main function to get cve
 
     Get all the CVE for a package/keyword. These are valid string:
@@ -37,9 +37,7 @@ def get_main_page(package,__format,__verbose):
         package (str): package, keyword you want to search for
 
     Return:
-        List: List of Tuple composed of all the CVE found for the choosen package. 
-        
-        Data Structure: [(cve_id_0, cve_link_0, cve_desc_0) ,..., (cve_id_n, cve_link_n, cve_desc_n)]
+        dict. A dict with an entry for each CVE with these keyword : ID,URL,DESC
 
     Examples:
     
@@ -47,47 +45,52 @@ def get_main_page(package,__format,__verbose):
 
         >> crawler.get_main_page("jython")
         
-        [
-            ('CVE-2016-4000',
-                'https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4000',
-                'Jython before 2.7.1rc1 allows attackers to execute arbitrary code via a '
-                'crafted serialized PyFunction object.'
-            ),
-         
-            ('CVE-2013-2027',
-                'https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2027',
-                'Jython 2.2.1 uses the current umask to set the privileges of the class '
-                'cache files, which allows local users to bypass intended access '
-                'restrictions via unspecified vectors.'
-            )
-        ]
+        {
+            0: {
+                'DESC': 'Jython before 2.7.1rc1 allows attackers to execute arbitrarycode via a crafted serialized PyFunction object.',
+                'ID': 'CVE-2016-4000',
+                'URL': 'https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4000'
+            },
+            
+            1: {
+                'DESC': 'Jython 2.2.1 uses the current umask to set the privileges of the class cache files, which allows local users to bypass intended access restrictions via unspecified vectors.',
+                'ID': 'CVE-2013-2027',
+                'URL': 'https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2013-2027'
+            }
+        }
 
     """
     dictMain = {}
     id = 0 
+    
     base_url = "https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=" + package # package can be a keyword or a CVE ID or a list of Keyword/CVE ID (separate with a +) 
     cve_group = []
     document = lh.fromstring(requests.get(base_url).text) 
     cve_entries = document.cssselect("div#TableWithRules table tr > td") # List of <tr> entries for CVE in main page
 
-
+    # Write package cve data in dictionnary
     for i in range(0, len(cve_entries) , 2):
-
         dictMain[id] = {
             "ID"   : cve_entries[i].text_content(),
             "URL"  : "https://cve.mitre.org/cgi-bin/cvename.cgi?name=" + cve_entries[i].text_content(),
             "DESC" : cve_entries[i+1].text_content().strip()
         }
         id +=1
-    print(dictMain[0])
-        
-    
 
-    with open('result.json', 'w') as fp:
-        json.dump(dictMain, fp)
+
+    if __format=="json":
+        with open("./output/"+ package + ".json", 'w') as fp:
+            json.dump(dictMain, fp)
 
     return dictMain
 
+def main_page(__format,package):
+    func = partial(get_main_page,__format)
+
+    with multiprocessing.Pool() as p:
+        dictList = p.map(func, package)
+    
+    return dictList
 
 
 
