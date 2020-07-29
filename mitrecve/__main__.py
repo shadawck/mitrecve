@@ -40,7 +40,7 @@ def main():
         utility.print_vulnerabilites_detail(__package,__verbose)
     else : 
         #utility.print_vulnerabilites(__package,__verbose)
-        crawler.main_page(__format,__package)
+        crawler.main_cve(__format,__package)
 
 if __name__ == "__main__":
     main()

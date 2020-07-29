@@ -84,37 +84,13 @@ def get_main_page(__format,package):
 
     return dictMain
 
-def main_page(__format,package):
+def main_cves(__format,package):
     func = partial(get_main_page,__format)
 
     with multiprocessing.Pool() as p:
         dictList = p.map(func, package)
     
     return dictList
-
-
-
-# Getter from main page
-## Pointless for now
-def get_cve_links(package) :
-    cve_links = []
-    cve_group = get_main_page(package)
-    for cve in cve_group :
-        cve_links.append(cve[1])
-    return cve_links
-
-def get_cve_id(package) :
-    cve_id = []
-    cve_group = get_main_page(package)
-    for cve in cve_group :
-        cve_id.append(cve[0])
-
-def get_cve_desc(package) :
-    cve_desc = []
-    cve_group = get_main_page(package)
-    for cve in cve_group :
-        cve_desc.append(cve[1])
-    return cve_desc
 
 def get_cve_detail(package):
     """Main function to get cve **details**
@@ -217,13 +193,10 @@ def get_cve_detail(package):
 
     return cve_detail 
 
-
 ##### WORKING ON OPIMISATION
 # Not for the current version
 def get_detail(url):
     # Add name, description and more like the non-optimized one
-
-
     document = lh.fromstring(requests.get(url, stream=True).text)  
     cve_ref = []     #  reference links
     
@@ -270,8 +243,3 @@ def get_cve_detail_opti(package):
             processes.append(executor.submit(get_detail, url))
 
     return [task.result() for task in as_completed(processes)]
-
-## OPTI STEP :
-# Get all CVE url from main page 
-# Construct url pool with multi threading 
-# Make request
