@@ -9,16 +9,14 @@ with open("README.md", "r") as fh:
 with open('requirements.txt') as f:
     required = f.read().splitlines()
 
-
-
 # This call to setup() does all the work
 setup(
     name="mitrecve",
-    version="1.0.5",
+    version="1.1.0",
     description="Get all CVE corresponding to a specific keyword or list of keywords from the MITRE database.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/remiflavien1/mitrecve",
+    url="https://github.com/shadawck/mitrecve",
     author="shadawck",
     author_email="hug211mire@gmail.com",
     license="MIT",
@@ -26,6 +24,9 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
     ],
     packages=["mitrecve"],
     include_package_data=True,   

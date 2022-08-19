@@ -1,5 +1,4 @@
 lxml
 docopt
 requests
-beautifulsoup4
 cssselect
