@@ -26,7 +26,7 @@ def main():
     """
     Implement CLI logic 
     """
-    arguments = docopt(__doc__, version='mitrecve 1.1.0')
+    arguments = docopt(__doc__, version='mitrecve 1.1.1')
 
     ############## CLI VAR ################
     __crawl      = arguments["crawl"]
@@ -61,9 +61,15 @@ def main():
     ####### SHOW COMMAND #########
     elif __show:
         __result  = arguments["<result>"] + ".json"
-        files = os.listdir("./output/")
-        if __result in files:
-            subprocess.run(["jq", ".","output/"+__result])
+        if os.path.exists("./output/"):
+            files = os.listdir("./output/")
+
+            if __result in files:
+                subprocess.run(["jq", ".","output/"+__result])
+                print("print")
+            else :         
+                print("Crawl first then look at the result !!!")
+                print("Try : \n\tmitrecve crawl", __result, "-f json" )
         else :
             print("Crawl first then look at the result !!!")
             print("Try : \n\tmitrecve crawl", __result, "-f json" )

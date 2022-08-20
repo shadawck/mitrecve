@@ -12,7 +12,7 @@ with open('requirements.txt') as f:
 # This call to setup() does all the work
 setup(
     name="mitrecve",
-    version="1.1.0",
+    version="1.1.1",
     description="Get all CVE corresponding to a specific keyword or list of keywords from the MITRE database.",
     long_description=long_description,
     long_description_content_type="text/markdown",
